@@ -1,0 +1,15 @@
+cvxpy==1.1.17
+matplotlib==3.1.0
+networkx==2.5.1
+numba==0.53.1
+numpy==1.19.5
+pandas==1.1.5
+Pillow==9.0.1
+scikit_learn==1.0.2
+scipy==1.5.4
+seaborn==0.11.2
+tensorboard==2.5.0
+torch==1.9.0
+torchvision==0.10.0
+tqdm==4.61.1
+wandb==0.12.0 

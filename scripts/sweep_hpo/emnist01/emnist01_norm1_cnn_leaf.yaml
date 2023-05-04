@@ -1,0 +1,63 @@
+# to find higher results with stronger model
+
+program: $WORK_DIR$/fedGate/run_experiment.py
+project: pFedNormGate
+name: emnist01,pFedNormGate,s=1,CNN-Leaf
+method: grid
+#method: bayes
+metric:
+  goal: maximize
+  name: node_agg/test/best_metric
+command:
+  - /usr/bin/env # ${env}
+  - $PYTHON_INTER_PATH$/python3   # ${interpreter}
+  - ${program}
+  - "emnist.sample01"
+  - "pFedGate"
+  - "--n_learners"
+  - "1"
+  - "--log_freq"
+  - "5"
+  - "--device"
+  - "cuda"
+  - "--seed"
+  - "1234"
+  - "--verbose"
+  - "1"
+  - "--bi_level_opt"
+  - "0"
+  - "--online_aggregate"
+  - "1"
+  - "--outdir"
+  - "exp/emnist01_s1_leafcnn"
+  - ${args}
+parameters:
+  fine_grained_block_split:
+    values: [5]
+  sparse_factor_scheduler:
+    values: [ constant ]
+  bz:
+    values: [128]
+  model_type:
+    values: [cnn_leaf]
+  optimizer:
+    values: [ sgd ]
+  lr_scheduler:
+    values: [ reduce_on_plateau_40, multi_step, reduce_on_plateau]
+  block_wise_prune:
+    value: 1
+  n_rounds:
+    values: [400 ]
+  local_steps:
+    values: [ 1]
+  sparse_factor:
+    values: [1]
+  lr_model:
+    values: [0.005, 0.01, 0.03, 0.05, 0.1, 0.3, 0.5]
+  lr_gating:
+    values: [[0.01, 0.05, 0.1, 0.3, 0.5, 1, 1.5]
+
+early_terminate:
+  type: hyperband
+  min_iter: 15
+  eta: 2
